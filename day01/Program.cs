@@ -2,6 +2,7 @@
 var elves = new Dictionary<int, int>();
 var index = 0;
 (int index,int amount) max = (0,0);
+
 foreach(var line in lines)
 {
     if(line == string.Empty)
@@ -19,4 +20,12 @@ foreach(var line in lines)
     }
     elves[index] += Convert.ToInt32(line);
 }
-Console.WriteLine(max);
+// find the top three elves
+var part2Total = elves
+    .ToList()
+    .OrderByDescending(p => p.Value)
+    .Take(3)
+    .Sum(p=>p.Value);
+
+Console.WriteLine($"first: {max.amount}");
+Console.WriteLine($"second: {part2Total}");
