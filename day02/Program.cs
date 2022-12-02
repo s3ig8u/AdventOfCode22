@@ -1,13 +1,7 @@
 ﻿var lines = File.ReadAllLines("input.txt");
-var gameList = new List<(string, string)>();
 var part1Answer = 0;
 var part2Answer = 0;
-var dic = new Dictionary<string, int>
-{
-    { "X",1 },
-    { "Y",2 },
-    { "Z",3 }
-};
+
 var winner = new Dictionary<string, string>
 {
     { "A", "Y" },
@@ -43,15 +37,13 @@ var winningMatrix = new int[3][]{
 foreach (var line in lines)
 {
     var game = line.Split(' ');
-    gameList.Add((game[0], game[1]));
 
-    var selection = string.Empty;
-    selection = FindMove(game);
-    var (opponent, me) = (indexes[game[0]], indexes[game[1]]);
-    var (opponent2, me2) = (indexes[game[0]], indexes[selection]);
-
-    part1Answer += dic[game[1]] + winningMatrix[opponent][me];
-    part2Answer += dic[selection] + winningMatrix[opponent2][me2];
+    var selection = FindMove(game);
+    var (opponent, me, me2) = (indexes[game[0]], indexes[game[1]], indexes[selection]);
+    // +1 because of your move index in indexes dictionary starts from 0
+    // so I need to +1 to get actual result of game.
+    part1Answer += 1 + indexes[game[1]] + winningMatrix[opponent][me];
+    part2Answer += 1 + indexes[selection] + winningMatrix[opponent][me2];
 }
 
 Console.WriteLine(part1Answer);
